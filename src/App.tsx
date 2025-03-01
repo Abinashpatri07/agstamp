@@ -1,6 +1,14 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Header from "./Components/Heder"
+
 const App = () => {
   return (
-    <div className="text-7xl">hello</div>
+    <BrowserRouter>
+    <Header/>
+    <Routes>
+      
+    </Routes>
+    </BrowserRouter>
   )
 }
 
