@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
     <footer className="bg-blue-500 text-white py-4 w-full mt-auto">
       <div className="flex flex-wrap flex-col sm:flex-row justify-center sm:justify-between items-center px-4 sm:px-6 mx-auto space-y-3 sm:space-y-0">
         <div className="flex items-center space-x-4 text-[#11295a] font-extrabold">
-          <Link to="/" className="w-10 h-10 bg-white flex items-center justify-center rounded-full text-base border-2 border-black cursor-pointer">
+          <Link to="/" className="w-10 h-10 bg-blue-500 flex items-center justify-center rounded-full text-base border-2 border-black cursor-pointer">
             AG
           </Link>
           <Link to="/" className="text-sm sm:text-base md:text-lg lg:text-xl">

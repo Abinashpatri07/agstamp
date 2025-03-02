@@ -11,7 +11,7 @@ const Header: React.FC = () => {
       <div className="px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center space-x-3 text-[#11295a]">
-          <Link to="/" className="w-12 h-12 bg-white flex items-center justify-center rounded-full font-bold text-2xl border-2 border-black cursor-pointer">
+          <Link to="/" className="w-12 h-12 bg-blue-500 flex items-center justify-center rounded-full font-bold text-2xl border-2 border-black cursor-pointer">
             AG
           </Link>
           <Link to="/" className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-blueRibbon-950">AG Stamp</Link>
