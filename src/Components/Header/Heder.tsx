@@ -7,7 +7,7 @@ const Header: React.FC = () => {
   const location = useLocation();
 
   return (
-    <header className="bg-blue-500 text-white shadow-md fixed top-0 left-0 w-full z-50">
+    <header className="bg-blue-500 text-white  fixed top-0 left-0 w-full z-50">
       <div className="px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center space-x-3 text-[#11295a]">
