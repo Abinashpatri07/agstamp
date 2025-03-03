@@ -82,12 +82,14 @@
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import img1 from "./image1.jpg"
+import img2 from "./image2.jpg"
+import img3 from "./image3.jpg"
 const products = [
-  { id: 1, name: "Product 1", image: "/src/Pages/image1.jpg", price: 100 },
-  { id: 2, name: "Product 2", image: "/src/Pages/image3.jpg", price: 150 },
-  { id: 3, name: "Product 3", image: "/src/Pages/image1.jpg", price: 120 },
-  { id: 4, name: "Product 4", image: "/src/Pages/image2.jpg", price: 200 },
+  { id: 1, name: "Product 1", image: {img1}, price: 100 },
+  { id: 2, name: "Product 2", image: {img2}, price: 150 },
+  { id: 3, name: "Product 3", image: {img3}, price: 120 },
+  { id: 4, name: "Product 4", image: {img2}, price: 200 },
 ];
 
 const RetailSales: React.FC = () => {
@@ -117,7 +119,7 @@ const RetailSales: React.FC = () => {
           >
             <div className="w-full h-48 flex items-center justify-center">
               <img
-                src={product.image}
+                src={String(product.image)}
                 alt={product.name}
                 className="w-full h-full object-contain rounded-lg"
               />

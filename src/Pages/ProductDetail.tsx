@@ -1,11 +1,13 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import img1 from "./image1.jpg"
+import img2 from "./image2.jpg"
+import img3 from "./image3.jpg"
 const products = [
-  { id: 1, name: "Product 1", image: "/src/Pages/image1.jpg", price: 100 },
-  { id: 2, name: "Product 2", image: "/src/Pages/image3.jpg", price: 150 },
-  { id: 3, name: "Product 3", image: "/src/Pages/image1.jpg", price: 120 },
-  { id: 4, name: "Product 4", image: "/src/Pages/image2.jpg", price: 200 },
+  { id: 1, name: "Product 1", image: {img1}, price: 100 },
+  { id: 2, name: "Product 2", image: {img2}, price: 150 },
+  { id: 3, name: "Product 3", image: {img3}, price: 120 },
+  { id: 4, name: "Product 4", image: {img2}, price: 200 },
 ];
 
 const ProductDetail: React.FC = () => {
@@ -23,7 +25,7 @@ const ProductDetail: React.FC = () => {
         
         {/* Left Side - Larger Product Image */}
         <div className="w-full md:w-1/2 flex justify-center">
-          <img src={product.image} alt={product.name} className="w-full max-w-[400px] h-[400px] object-contain rounded-lg" />
+          <img src={String(product?.image)} alt={product.name} className="w-full max-w-[400px] h-[400px] object-contain rounded-lg" />
         </div>
 
         {/* Right Side - Product Details */}
