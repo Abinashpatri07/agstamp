@@ -1,13 +1,11 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import img1 from "./image1.jpg"
-import img2 from "./image2.jpg"
-import img3 from "./image3.jpg"
+import { img1, img2, img3 } from "../assets/image";
 const products = [
-  { id: 1, name: "Product 1", image: {img1}, price: 100 },
-  { id: 2, name: "Product 2", image: {img2}, price: 150 },
-  { id: 3, name: "Product 3", image: {img3}, price: 120 },
-  { id: 4, name: "Product 4", image: {img2}, price: 200 },
+  { id: 1, name: "Product 1", image: img1, price: 100 },
+  { id: 2, name: "Product 2", image: img2, price: 150 },
+  { id: 3, name: "Product 3", image: img3, price: 120 },
+  { id: 4, name: "Product 4", image: img2, price: 200 },
 ];
 
 const ProductDetail: React.FC = () => {
