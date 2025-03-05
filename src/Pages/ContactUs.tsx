@@ -115,7 +115,7 @@ const ContactUs: React.FC = () => {
                 />
               </div>
               <div className="mb-6">
-                <ReCAPTCHA sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" onChange={handleCaptchaChange} />
+                <ReCAPTCHA sitekey="6Lc2hOoqAAAAAN6eHffXryENJ1T72Tw0oi8sVkMg" onChange={handleCaptchaChange} />
 
               </div>
               {/* <button
