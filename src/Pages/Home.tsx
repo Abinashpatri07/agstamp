@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full min-h-screen bg-blue-500 text-white text-center px-6 py-8">
+    <div className="flex flex-col items-center w-full min-h-screen bg-blue-500 text-white text-center px-20 py-8">
       {/* Header Section */}
       <header className="w-full">
         <h1 className="text-4xl font-bold text-red-300">AG STAMP</h1>
@@ -71,10 +71,11 @@ const Home: React.FC = () => {
           >
             email
           </a>.
-        </p>
+        </p> 
+      </main>
 
-        {/* Subscription Section */}
-        <div className="mt-20 flex flex-col md:flex-row items-center bg-blue-800 mx-0 py-3 rounded-xl justify-center lg:justify-around gap-4 px-4 w-full max-w-4xl">
+       {/* Subscription Section */}
+       <div className="mt-20 flex flex-col md:flex-row items-center bg-blue-800  py-3 rounded-xl justify-center lg:justify-around w-full gap-4 px-4">
           {/* Subscription Text */}
           <div className="text-sm md:text-lg lg:text-xl w-full lg:w-2/5 text-center font-medium text-gray-100 leading-normal">
             Please <span className="text-blue-400">subscribe to our mailing list!</span>
@@ -96,7 +97,6 @@ const Home: React.FC = () => {
             </button>
           </div>
         </div>
-      </main>
     </div>
   );
 };

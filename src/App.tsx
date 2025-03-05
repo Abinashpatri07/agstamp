@@ -8,9 +8,11 @@ import Cart from "./Pages/Cart";
 import ProductDetail from "./Pages/ProductDetail";
 import { CartProvider } from "./Pages/CartContext";
 import ContactUs from "./Pages/ContactUs";
+import React from "react";
 
 const App = () => {
   return (
+    <React.StrictMode>
     <CartProvider>
       <BrowserRouter>
         <div className="flex flex-col min-h-screen whitespace-normal break-words">
@@ -29,7 +31,8 @@ const App = () => {
         <Footer />
         </div>
       </BrowserRouter>
-    </CartProvider>  
+    </CartProvider> 
+    </React.StrictMode> 
   );
 };
 

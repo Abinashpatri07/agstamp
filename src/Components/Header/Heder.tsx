@@ -1,6 +1,6 @@
 // import React, { useState, useEffect, useRef } from "react";
 // import { Link, useLocation } from "react-router-dom";
-// import { Menu } from "lucide-react";
+// import { Menu, ShoppingCart } from "lucide-react"; // Import cart icon
 
 // const Header: React.FC = () => {
 //   const [isOpen, setIsOpen] = useState(false);
@@ -45,13 +45,24 @@
 //           <Link to="/contact-us" className={`hover:text-black ${location.pathname === "/contact-us" ? "border-t-2 border-black" : ""}`}>Contact Us</Link>
 //         </nav>
 
-//         {/* Login Button */}
-//         <button className="bg-[#11295a] text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-400">Login</button>
+//         {/* Right Side - Login & Cart */}
+//         <div className="flex items-center space-x-4">
+//           <button className="bg-[#11295a] text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-400">
+//             Login
+//           </button>
 
-//         {/* Mobile Menu Button */}
-//         <button onClick={() => setIsOpen(!isOpen)} className="md:hidden focus:outline-none">
-//           <Menu size={28} />
-//         </button>
+//           {/* Cart Icon */}
+//           <Link to="/cart" className="relative">
+//             <ShoppingCart size={28} className="text-white hover:text-gray-300 transition" />
+//             {/* Cart Count (optional) */}
+//             {/* <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-2 py-1">3</span> */}
+//           </Link>
+
+//           {/* Mobile Menu Button */}
+//           <button onClick={() => setIsOpen(!isOpen)} className="md:hidden focus:outline-none">
+//             <Menu size={28} />
+//           </button>
+//         </div>
 //       </div>
 
 //       {/* Mobile Navigation */}
@@ -62,6 +73,9 @@
 //           <Link to="/ebay-sales" className={`hover:text-black ${location.pathname === "/ebay-sales" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>Old Products</Link>
 //           <Link to="/retail-sales" className={`hover:text-black ${location.pathname === "/retail-sales" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>Products</Link>
 //           <Link to="/contact-us" className={`hover:text-black ${location.pathname === "/contact-us" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>Contact Us</Link>
+//           <Link to="/cart" className="hover:text-black flex justify-center items-center gap-2" onClick={() => setIsOpen(false)}>
+//             <ShoppingCart size={24} /> Cart
+//           </Link>
 //         </nav>
 //       )}
 //     </header>
@@ -73,11 +87,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, ShoppingCart } from "lucide-react"; // Import cart icon
+import { useCart } from "../../Pages/CartContext";
+ // Import useCart hook
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
+  const { cart } = useCart(); // Get cart data
+
+  // Calculate total cart items
+  const cartCount = cart.reduce((total: any, item: { quantity: any; }) => total + item.quantity, 0);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -112,7 +132,7 @@ const Header: React.FC = () => {
         <nav className="hidden md:flex gap-5 font-semibold text-sm md:text-base">
           <Link to="/" className={`hover:text-black ${location.pathname === "/" ? "border-t-2 border-black" : ""}`}>Home</Link>
           <Link to="/about-us" className={`hover:text-black ${location.pathname === "/about-us" ? "border-t-2 border-black" : ""}`}>About Us</Link>
-          <Link to="/ebay-sales" className={`hover:text-black ${location.pathname === "/ebay-sales" ? "border-t-2 border-black" : ""}`}>Old Products</Link>
+          <a href="http://agstamp.com/retailsales.htm" className={`hover:text-black ${location.pathname === "/ebay-sales" ? "border-t-2 border-black" : ""}`} target="_blank" onClick={() => setIsOpen(false)}>Old Products</a>
           <Link to="/retail-sales" className={`hover:text-black ${location.pathname === "/retail-sales" ? "border-t-2 border-black" : ""}`}>Products</Link>
           <Link to="/contact-us" className={`hover:text-black ${location.pathname === "/contact-us" ? "border-t-2 border-black" : ""}`}>Contact Us</Link>
         </nav>
@@ -123,11 +143,16 @@ const Header: React.FC = () => {
             Login
           </button>
 
-          {/* Cart Icon */}
+          {/* Cart Icon with Badge */}
           <Link to="/cart" className="relative">
             <ShoppingCart size={28} className="text-white hover:text-gray-300 transition" />
-            {/* Cart Count (optional) */}
-            {/* <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-2 py-1">3</span> */}
+            
+            {/* Show cart count only if there are items */}
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
           </Link>
 
           {/* Mobile Menu Button */}
@@ -142,11 +167,20 @@ const Header: React.FC = () => {
         <nav ref={menuRef} className="md:hidden bg-blue-700 p-4 flex flex-col space-y-4 text-center font-semibold">
           <Link to="/" className={`hover:text-black ${location.pathname === "/" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>Home</Link>
           <Link to="/about-us" className={`hover:text-black ${location.pathname === "/about-us" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>About Us</Link>
-          <Link to="/ebay-sales" className={`hover:text-black ${location.pathname === "/ebay-sales" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>Old Products</Link>
+          <a href="http://agstamp.com/retailsales.htm" className={`hover:text-black ${location.pathname === "/ebay-sales" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>Old Products</a>
           <Link to="/retail-sales" className={`hover:text-black ${location.pathname === "/retail-sales" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>Products</Link>
           <Link to="/contact-us" className={`hover:text-black ${location.pathname === "/contact-us" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>Contact Us</Link>
+          
+          {/* Cart Link in Mobile Menu */}
           <Link to="/cart" className="hover:text-black flex justify-center items-center gap-2" onClick={() => setIsOpen(false)}>
             <ShoppingCart size={24} /> Cart
+            
+            {/* Show cart count only if there are items */}
+            {cartCount > 0 && (
+              <span className="bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
           </Link>
         </nav>
       )}

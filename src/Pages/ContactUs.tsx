@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReCAPTCHA from 'react-google-recaptcha';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { contactus } from "../assets/image";
 
 const ContactUs: React.FC = () => {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
@@ -36,11 +37,11 @@ const ContactUs: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden mt-10">
+    <div className="min-h-screen overflow-x-hidden">
       {/* Header Section */}
       <div
-        className="w-full h-48 sm:h-64 bg-cover bg-center flex justify-center items-center shadow-lg"
-        style={{ backgroundImage: "url('./contactus')" }}
+        className="w-full h-48 sm:h-64 bg-cover bg-center flex justify-center items-center shadow-lg bg-no-repeat"
+        style={{ backgroundImage: `url(${contactus})` }}
       >
         <h1 className="text-white text-3xl sm:text-4xl font-bold drop-shadow-lg">Contact Us</h1>
       </div>

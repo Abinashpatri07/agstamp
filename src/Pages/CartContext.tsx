@@ -1,4 +1,4 @@
-// import React, { createContext, useContext, useState, ReactNode } from "react";
+// import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 // // Define cart item type
 // interface CartItem {
@@ -15,7 +15,7 @@
 //   addToCart: (product: CartItem) => void;
 //   removeFromCart: (id: number) => void;
 //   clearCart: () => void;
-//   updateQuantity: (id: number, amount: number) => void;  // <-- FIXED: Added updateQuantity function
+//   updateQuantity: (id: number, amount: number) => void;
 // }
 
 // // Create context
@@ -32,7 +32,16 @@
 
 // // Cart Provider Component
 // export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-//   const [cart, setCart] = useState<CartItem[]>([]);
+//   // Load cart from localStorage
+//   const [cart, setCart] = useState<CartItem[]>(() => {
+//     const savedCart = localStorage.getItem("cart");
+//     return savedCart ? JSON.parse(savedCart) : [];
+//   });
+
+//   // Save cart to localStorage whenever it changes
+//   useEffect(() => {
+//     localStorage.setItem("cart", JSON.stringify(cart));
+//   }, [cart]);
 
 //   // Add to Cart Function
 //   const addToCart = (product: CartItem) => {
@@ -55,9 +64,10 @@
 //   // Clear Cart
 //   const clearCart = () => {
 //     setCart([]);
+//     localStorage.removeItem("cart"); // Also remove from localStorage
 //   };
 
-//   // Update Quantity Function (Fix for the error)
+//   // Update Quantity Function
 //   const updateQuantity = (id: number, amount: number) => {
 //     setCart((prevCart) =>
 //       prevCart.map((item) =>
@@ -74,30 +84,30 @@
 // };
 
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
-// Define cart item type
-interface CartItem {
+// Define Product Type
+interface Product {
   id: number;
   name: string;
-  image: string;
   price: number;
+  image: string;
   quantity: number;
 }
 
-// Define context type
+// Define Cart Context Type
 interface CartContextType {
-  cart: CartItem[];
-  addToCart: (product: CartItem) => void;
+  cart: Product[];
+  addToCart: (product: Product) => void;
   removeFromCart: (id: number) => void;
-  clearCart: () => void;
   updateQuantity: (id: number, amount: number) => void;
+  clearCart: () => void;
 }
 
-// Create context
+// Create Context
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Custom hook for using the cart context
+// Custom Hook to use Cart Context
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
@@ -107,20 +117,19 @@ export const useCart = () => {
 };
 
 // Cart Provider Component
-export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Load cart from localStorage
-  const [cart, setCart] = useState<CartItem[]>(() => {
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [cart, setCart] = useState<Product[]>(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  // Save cart to localStorage whenever it changes
+  // Save cart to localStorage on changes
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  // Add to Cart Function
-  const addToCart = (product: CartItem) => {
+  // Add item to cart
+  const addToCart = (product: Product) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
       if (existingItem) {
@@ -132,18 +141,12 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     });
   };
 
-  // Remove from Cart
+  // Remove item from cart
   const removeFromCart = (id: number) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
-  // Clear Cart
-  const clearCart = () => {
-    setCart([]);
-    localStorage.removeItem("cart"); // Also remove from localStorage
-  };
-
-  // Update Quantity Function
+  // Update quantity
   const updateQuantity = (id: number, amount: number) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
@@ -152,8 +155,13 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     );
   };
 
+  // Clear cart
+  const clearCart = () => {
+    setCart([]);
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, updateQuantity }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}>
       {children}
     </CartContext.Provider>
   );
