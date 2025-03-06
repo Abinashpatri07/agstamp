@@ -104,7 +104,7 @@ const Cart: React.FC = () => {
   const total = cart.reduce((sum, product) => sum + product.price * product.quantity, 0);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 p-4 sm:p-8 mt-14">
+    <div className="flex flex-col min-h-screen bg-gray-100 p-4 sm:p-8 ">
       <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Shopping Cart</h1>
 
       {cart.length === 0 ? (
