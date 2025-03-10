@@ -109,14 +109,15 @@ const PaymentMethod: React.FC = () => {
 
   const handlePaymentSelection = (method: string) => {
     setPaymentMethod(method);
-    if (method === "paypal") {
-      const paypalUrl = `https://www.paypal.com/webapps/hermes?token=7NM353737J5616742&useraction=commit&amount=${cartTotal}`;
-      window.open(paypalUrl, "_blank", "width=600,height=600");
-    }
   };
 
   const handleProceedToPayment = () => {
-    navigate("/checkout");
+    if (paymentMethod === "paypal") {
+      const paypalUrl = `https://www.paypal.com/checkoutnow?token=7NM353737J5616742&useraction=commit&amount=${cartTotal}`;
+      window.location.href = paypalUrl; // Redirects to PayPal in the same tab
+    } else {
+      navigate("/checkout");
+    }
   };
 
   return (
@@ -174,4 +175,3 @@ const PaymentMethod: React.FC = () => {
 };
 
 export default PaymentMethod;
-
