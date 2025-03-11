@@ -105,7 +105,7 @@ import { useNavigate } from "react-router-dom";
 const PaymentMethod: React.FC = () => {
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState<string>("");
-  const cartTotal = 100; // Replace with actual cart total fetched from context or state
+  // const cartTotal = 100; // Replace with actual cart total fetched from context or state
 
   const handlePaymentSelection = (method: string) => {
     setPaymentMethod(method);
