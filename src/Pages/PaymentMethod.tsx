@@ -113,7 +113,7 @@ const PaymentMethod: React.FC = () => {
 
   const handleProceedToPayment = () => {
     if (paymentMethod === "paypal") {
-      const paypalUrl = `https://www.paypal.com/checkoutnow?token=7NM353737J5616742&useraction=commit&amount=${cartTotal}`;
+      const paypalUrl = "https://www.paypal.com/webapps/hermes?token=5HH31645SJ357415F&useraction=commit&wpsFlowRedirectToXorouterSkipHermesStartTime=1741705101984&flowType=WPS&mfid=1741705101664_f786395737536";
       window.location.href = paypalUrl; // Redirects to PayPal in the same tab
     } else {
       navigate("/checkout");

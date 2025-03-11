@@ -88,6 +88,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, ShoppingCart } from "lucide-react"; // Import cart icon
 import { useCart } from "../../Pages/CartContext";
+import { logo } from "../../assets/image";
+
  // Import useCart hook
 
 const Header: React.FC = () => {
@@ -121,12 +123,17 @@ const Header: React.FC = () => {
     <header className="bg-blue-500 text-white fixed top-0 left-0 w-full z-50">
       <div className="px-6 py-4 flex justify-between items-center">
         {/* Logo */}
-        <div className="flex items-center space-x-3 text-[#11295a]">
-          <Link to="/" className="w-12 h-12 bg-blue-500 flex items-center justify-center rounded-full font-bold text-2xl border-2 border-black cursor-pointer">
-            AG
+        
+        {/* <div className="flex flex-col items-center space-x-3 text-[#11295a]"> */}
+          <Link to="/" className="w-20 h-14 bg-white flex items-center justify-center rounded-lg cursor-pointer overflow-hidden">
+            <img src={logo} alt="Logo" className="w-full h-full object-contain" />
           </Link>
-          <Link to="/" className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-blueRibbon-950">AG Stamp</Link>
-        </div>
+          {/* <Link to="/" className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-blueRibbon-950">
+            AG Stamp
+          </Link> */}
+        {/* </div> */}
+
+
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-5 font-semibold text-sm md:text-base">
