@@ -44,27 +44,27 @@ import { dealer1, dealer2 } from "../../assets/image";
 const Footer: React.FC = () => {
   return (
     <footer className="bg-blue-500 text-white py-4 w-full mt-auto">
-      <div className="flex flex-wrap justify-between items-center px-4 sm:px-6 mx-auto">
+      <div className="flex flex-col md:flex-row justify-between items-center px-4 sm:px-6 mx-auto">
         
         {/* Left-aligned content: Image + Paragraph + Image */}
-        <div className="flex justify-center items-center space-x-5">
+        <div className="flex justify-between items-center gap-5">
           {/* Image before text */}
           <img 
             src={dealer1} 
             alt="dealer1"
-            className="h-12 w-12 sm:h-16 sm:w-16 object-contain"
+            className="h-12 w-16 md:w-24 object-contain"
           />
 
           {/* Paragraph */}
           <p className="text-xs sm:text-sm md:text-base lg:text-lg font-light text-center sm:text-left">
-            &copy; 2007 AG STAMP. All rights reserved.
+            &copy; 2007 AG STAMP.<br className="md:hidden"/> All rights reserved.
           </p>
 
           {/* Image after text */}
           <img 
             src={dealer2} 
             alt="dealer2"
-            className="h-12 w-12 sm:h-16 sm:w-16 object-contain"
+            className="h-12 w-20 md:w-28 object-contain"
           />
         </div>
 
