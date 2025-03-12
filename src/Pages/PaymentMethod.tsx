@@ -113,7 +113,7 @@ const PaymentMethod: React.FC = () => {
 
   const handleProceedToPayment = () => {
     if (paymentMethod === "paypal") {
-      const paypalUrl = "https://www.paypal.com/webapps/hermes?token=5HH31645SJ357415F&useraction=commit&wpsFlowRedirectToXorouterSkipHermesStartTime=1741705101984&flowType=WPS&mfid=1741705101664_f786395737536";
+      const paypalUrl = "https://www.paypal.com/webapps/hermes?token=5MC46650049923032&useraction=commit&wpsFlowRedirectToXorouterSkipHermesStartTime=1741790725443&flowType=WPS&mfid=1741790725214_f12051256869f";
       window.location.href = paypalUrl; // Redirects to PayPal in the same tab
     } else {
       navigate("/checkout");
@@ -126,6 +126,18 @@ const PaymentMethod: React.FC = () => {
         <div className="p-6">
           <h3 className="text-xl font-bold mb-4">Choose Payment Method</h3>
           <div className="space-y-4 mb-6">
+          <label className="flex items-center space-x-3 cursor-pointer">
+              <input
+                type="radio"
+                name="payment"
+                className="hidden"
+                onChange={() => handlePaymentSelection("card")}
+              />
+              <div className="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center">
+                {paymentMethod === "card" && <div className="w-3 h-3 bg-green-600 rounded-full"></div>}
+              </div>
+              <span className="text-gray-700">Card Payment</span>
+            </label>
             <label className="flex items-center space-x-3 cursor-pointer">
               <input
                 type="radio"
@@ -138,20 +150,21 @@ const PaymentMethod: React.FC = () => {
               </div>
               <span className="text-gray-700">PayPal Payment</span>
             </label>
-            <label className="flex items-center space-x-3 cursor-pointer">
+            {/* <label className="flex items-center space-x-3 cursor-pointer">
               <input
                 type="radio"
                 name="payment"
                 className="hidden"
+
                 onChange={() => handlePaymentSelection("card")}
               />
               <div className="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center">
                 {paymentMethod === "card" && <div className="w-3 h-3 bg-green-600 rounded-full"></div>}
               </div>
               <span className="text-gray-700">Card Payment</span>
-            </label>
+            </label> */}
           </div>
-          <div className="bg-gray-50 p-4 rounded-lg mb-6">
+          {/* <div className="bg-gray-50 p-4 rounded-lg mb-6">
             <h4 className="font-semibold mb-2">Bank Information</h4>
             <p className="text-sm text-gray-600">Please transfer the total amount to the following account:</p>
             <ul className="mt-2 text-sm space-y-1 text-gray-700">
@@ -161,7 +174,7 @@ const PaymentMethod: React.FC = () => {
               <li><span className="font-semibold">Sort Code: </span>12-34-56</li>
               <li><span className="font-semibold">Reference: </span>Your Order Number</li>
             </ul>
-          </div>
+          </div> */}
           <button
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-200"
             onClick={handleProceedToPayment}

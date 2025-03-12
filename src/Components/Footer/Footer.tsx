@@ -47,26 +47,29 @@ const Footer: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between items-center px-4 sm:px-6 mx-auto">
         
         {/* Left-aligned content: Image + Paragraph + Image */}
-        <div className="flex justify-between items-center gap-5">
-          {/* Image before text */}
-          <img 
-            src={dealer1} 
-            alt="dealer1"
-            className="h-12 w-16 md:w-24 object-contain"
-          />
+        <div className="w-full flex justify-center md:justify-center items-center gap-10 md:gap-16">
+            {/* Image before text */}
+            <img 
+              src={dealer1} 
+              alt="dealer1"
+              className="h-16 w-20 md:h-24 md:w-32 object-contain"
+            />
 
-          {/* Paragraph */}
-          <p className="text-xs sm:text-sm md:text-base lg:text-lg font-light text-center sm:text-left">
-            &copy; 2007 AG STAMP.<br className="md:hidden"/> All rights reserved.
-          </p>
+            {/* Paragraph */}
+            {/* <p className="text-sm sm:text-lg md:text-xl lg:text-2xl font-light text-center md:text-left">
+              &copy; 2007 AG STAMP.<br className="md:hidden"/> All rights reserved.
+            </p> */}
+            <p className="text-xs sm:text-sm md:text-base lg:text-lg font-light text-center sm:text-left">
+                      &copy; 2007 AG STAMP.<br className="md:hidden"/> All rights reserved.
+                    </p>
 
-          {/* Image after text */}
-          <img 
-            src={dealer2} 
-            alt="dealer2"
-            className="h-12 w-20 md:w-28 object-contain"
-          />
-        </div>
+            {/* Image after text */}
+            <img 
+              src={dealer2} 
+              alt="dealer2"
+              className="h-16 w-24 md:h-28 md:w-40 object-contain"
+            />
+          </div>
 
 
         {/* Right-aligned social icons */}

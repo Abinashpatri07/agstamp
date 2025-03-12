@@ -125,7 +125,7 @@ const Header: React.FC = () => {
         {/* Logo */}
         
         {/* <div className="flex flex-col items-center space-x-3 text-[#11295a]"> */}
-          <Link to="/" className="w-20 h-14 bg-white flex items-center justify-center rounded-lg cursor-pointer overflow-hidden">
+          <Link to="/" className="w-30 h-18 bg-white flex items-center justify-center rounded-lg cursor-pointer overflow-hidden">
             <img src={logo} alt="Logo" className="w-full h-full object-contain" />
           </Link>
           {/* <Link to="/" className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-blueRibbon-950">

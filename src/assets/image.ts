@@ -8,5 +8,5 @@ import logo from "./logo.jpg"
 import bgImg from './stampBg.png'
  import dealer1 from "./dealer1.jpg"
  import dealer2 from "./dealer2.gif"
-
-export {img1,img2,img3,img4, img5,contactus,logo,bgImg, dealer1,dealer2}
+import img6 from "./image6.jpg"
+export {img1,img2,img3,img4, img5, img6, contactus,logo,bgImg, dealer1,dealer2}

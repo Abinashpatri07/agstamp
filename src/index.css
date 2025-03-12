@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+@keyframes waveMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  
+  @keyframes waveMoveReverse {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+  
+  .animate-waveMove {
+    animation: waveMove 8s linear infinite;
+  }
+  
+  .animate-waveMoveReverse {
+    animation: waveMoveReverse 10s linear infinite;
+  }
+  
+  
+  
