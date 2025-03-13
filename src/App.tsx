@@ -12,6 +12,8 @@ import React from "react";
 import PaymentMethod from "./Pages/PaymentMethod";
 import CheckoutPage from "./Pages/CheckoutPage";
 
+
+
 const App = () => {
   return (
     <React.StrictMode>

@@ -1,34 +1,60 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const WaveAnimation: React.FC = () => {
-  return (
-    <div className="absolute w-full overflow-hidden h-20 bottom-0">
-      {/* First Wave - Flipped Upside Down */}
-      <svg
-        className="absolute top-0 left-0 w-[200%] h-full animate-waveMove transform scale-y-[-1]"
-        viewBox="0 0 1440 320"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill="#3b82f6" /* Light Blue */
-          fillOpacity="1"
-          d="M0,224L48,234.7C96,245,192,267,288,272C384,277,480,267,576,240C672,213,768,171,864,144C960,117,1056,107,1152,117.3C1248,128,1344,160,1392,176L1440,192V0H0Z"
-        />
-      </svg>
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-      {/* Second Wave - Also Flipped and Moves in Reverse */}
-      <svg
-        className="absolute top-0 left-0 w-[200%] h-full animate-waveMoveReverse transform scale-y-[-1]"
-        viewBox="0 0 1440 320"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill="#2563eb" /* Dark Blue */
-          fillOpacity="0.7"
-          d="M0,160L48,170.7C96,181,192,203,288,224C384,245,480,267,576,256C672,245,768,213,864,181.3C960,149,1056,117,1152,122.7C1248,128,1344,192,1392,224L1440,256V0H0Z"
-        />
-      </svg>
-    </div>
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Function to resize the canvas dynamically
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerWidth < 640 ? 60 : 100; // Adjust height for small screens
+    };
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    let waveOffset = 0;
+    const waveHeight = window.innerWidth < 640 ? 10 : 20; // Smaller waves on mobile
+    const waveFrequency = window.innerWidth < 640 ? 0.03 : 0.02;
+    const waveSpeed = window.innerWidth < 640 ? 0.04 : 0.05;
+
+    const drawWave = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#3b82f6"; // Water blue color
+      ctx.beginPath();
+
+      for (let x = 0; x < canvas.width; x++) {
+        const y = Math.sin(x * waveFrequency + waveOffset) * waveHeight + waveHeight;
+        ctx.lineTo(x, y);
+      }
+
+      ctx.lineTo(canvas.width, canvas.height);
+      ctx.lineTo(0, canvas.height);
+      ctx.closePath();
+      ctx.fill();
+
+      waveOffset += waveSpeed;
+      requestAnimationFrame(drawWave);
+    };
+
+    drawWave();
+
+    return () => {
+      cancelAnimationFrame(drawWave as any);
+      window.removeEventListener("resize", resizeCanvas);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute top-0 left-0 w-full"
+    />
   );
 };
 
