@@ -46,7 +46,13 @@ const Home: React.FC = () => {
 
           {/* Wave Effect */}
           <div className="absolute bottom-5 md:bottom-10 lg:bottom-14 left-0 w-full">
-            <WaveAnimation/>
+          <WaveAnimation offsetX={0} opacity={0.8} color="#3b82f6" />
+          </div>
+          <div className="absolute bottom-5 md:bottom-10 lg:bottom-14 left-0 w-full">
+          <WaveAnimation offsetX={10} opacity={0.7} color="#2563eb" />
+          </div>
+          <div className="absolute bottom-5 md:bottom-10 lg:bottom-14 left-0 w-full">
+          <WaveAnimation offsetX={-1} opacity={0.9} color="#1e40af" />
           </div>
       </div>
 
@@ -143,7 +149,7 @@ const Home: React.FC = () => {
       </div>
       {/* Caresoul*/}
       <h2 className="text-2xl font-bold text-red-300 mt-10">Option-2</h2>
-      <div className="w-screen px-[10%] text-sm">
+      <div className="w-full px-[10%] text-sm">
       <StampCarousel stampCategories={stampCategories} />
       </div>
 

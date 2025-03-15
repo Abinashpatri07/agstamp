@@ -51,7 +51,7 @@ const StampCarousel: React.FC<StampCarouselProps> = ({ stampCategories }) => {
   };
 
   return (
-    <div className="w-full mx-auto mt-10 px-4">
+    <div className="w-full mx-auto mt-10 px-4 ">
       <h2 className="font-bold text-red-300 text-center mb-6">
         Displaying Different Stamp Categories
       </h2>
@@ -68,7 +68,7 @@ const StampCarousel: React.FC<StampCarouselProps> = ({ stampCategories }) => {
             <img
               src={stamp.image}
               alt={stamp.name}
-              className="w-full h-40 object-contain rounded-md"
+              className="w-3xl h-40 object-contain rounded-md"
             />
             <h3 className="text-[10px] md:text-sm lg:text-lg font-semibold mt-3">{stamp.name}</h3>
           </div>
