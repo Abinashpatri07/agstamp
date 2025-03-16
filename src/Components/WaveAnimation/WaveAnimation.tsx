@@ -58,14 +58,5 @@ const WaveAnimation: React.FC<{ offsetX?: number; opacity?: number; color?: stri
   );
 };
 
-const MultiWaveAnimation: React.FC = () => {
-  return (
-    <div className="relative w-full h-24 overflow-hidden">
-      <WaveAnimation offsetX={0} opacity={0.6} color="#3b82f6" />  {/* First wave (default) */}
-      <WaveAnimation offsetX={10} opacity={0.4} color="#2563eb" /> {/* Slightly shifted */}
-      <WaveAnimation offsetX={-10} opacity={0.3} color="#1e40af" /> {/* Further shifted */}
-    </div>
-  );
-};
 
 export default WaveAnimation;
