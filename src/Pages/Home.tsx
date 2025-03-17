@@ -106,7 +106,7 @@ const Home: React.FC = () => {
 
       {/* Stamp Categories Section */}
       <h2 className="text-2xl font-bold text-red-300 mt-10">Displaying Different Stamp Categories</h2>
-      <div className="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-4 px-4">
+      {/* <div className="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-4 px-4">
         {stampCategories.map((stamp, index) => (
           <div 
             key={index} 
@@ -118,9 +118,9 @@ const Home: React.FC = () => {
             <h3 className="text-lg font-semibold mt-3">{stamp.name}</h3>
           </div>
         ))}
-      </div>
+      </div> */}
       {/* Caresoul*/}
-      <h2 className="text-2xl font-bold text-red-300 mt-10">Option-2</h2>
+      {/* <h2 className="text-2xl font-bold text-red-300 mt-10">Option-2</h2> */}
       <div className="w-full px-[10%] text-sm">
       <StampCarousel stampCategories={stampCategories} />
       </div>

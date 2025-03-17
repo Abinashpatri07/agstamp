@@ -214,10 +214,12 @@ const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
   }, [image]);
 
   return (
-      <canvas
+     <div className="flex mb-10">
+       <canvas
         ref={canvasRef}
-        className="top-0 left-0 w-full"
+        className="top-0 left-0 w-full rounded-2xl"
       />
+     </div>
   );
 };
 

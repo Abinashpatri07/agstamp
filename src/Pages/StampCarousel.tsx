@@ -52,9 +52,9 @@ const StampCarousel: React.FC<StampCarouselProps> = ({ stampCategories }) => {
 
   return (
     <div className="w-full mx-auto mt-10 px-4 ">
-      <h2 className="font-bold text-red-300 text-center mb-6">
+      {/* <h2 className="font-bold text-red-300 text-center mb-6">
         Displaying Different Stamp Categories
-      </h2>
+      </h2> */}
       <Slider {...settings}>
         {stampCategories.map((stamp, index) => (
           <div
