@@ -27,42 +27,11 @@ const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center w-full min-h-screen bg-blue-500 text-white text-center px-6 py-8">
-      
-      {/* TOP IMAGE SECTION */}
-      {/* <img 
-        src={img6}  // Replace with actual image variable or path
-        alt="img6"
-        className="w-full max-h-80 object-cover rounded-lg shadow-lg"
-      /> */}
-     
-        {/* Image */}
-        {/* <div className="relative w-full"> */}
-        {/* Image */}
-          {/* <img 
-            src={img6}  
-            alt="img6"
-            className="w-full max-h-80 object-cover rounded-lg"
-          /> */}
-        <div style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
-      <WaveAnimation imageUrl={img6} /> {/* Pass the local image URL */}
-    </div> 
-
-          {/* Wave Effect */}
-          {/* <div className="absolute bottom-5 md:bottom-10 lg:bottom-14 left-0 w-full">
-          <WaveAnimation offsetX={0} opacity={0.8} color="#3b82f6" />
-          </div>
-          <div className="absolute bottom-5 md:bottom-10 lg:bottom-14 left-0 w-full">
-          <WaveAnimation offsetX={10} opacity={0.7} color="#2563eb" />
-          </div>
-          <div className="absolute bottom-5 md:bottom-10 lg:bottom-14 left-0 w-full">
-          <WaveAnimation offsetX={-1} opacity={0.9} color="#1e40af" />
-          </div> */}
-      {/* </div> */}
-
-
-
+        <div className="relative w-full h-full overflow-hidden">
+          <WaveAnimation imageUrl={img6} /> {/* Pass the local image URL */}
+        </div>
       {/* Header Section */}
-      <header className="w-full flex flex-col items-center text-center -mt-16">
+      <header className="w-full flex flex-col items-center text-center">
         <h1 className="text-4xl font-bold text-red-300">AG STAMP</h1>
         <p className="text-lg font-medium mt-2">Specializing in philately of Russia & Area</p>
       </header>

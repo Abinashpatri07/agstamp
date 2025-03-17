@@ -143,8 +143,6 @@
 // export default WaveAnimation;
 
 import React, { useEffect, useRef, useState } from "react";
-import "./WaveImage.css"; // Import the CSS file
-import img6 from "../../../src/assets/image6.jpg"; // Import the image correctly
 
 const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -153,7 +151,7 @@ const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
   useEffect(() => {
     // Load the image
     const img = new Image();
-    img.src = img6; // Use the imported image directly (no curly braces)
+    img.src = imageUrl; // Use the imported image directly (no curly braces)
     img.onload = () => {
       setImage(img);
     };
@@ -216,13 +214,10 @@ const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
   }, [image]);
 
   return (
-    <div className="wave-container" >
       <canvas
         ref={canvasRef}
-        className="absolute top-0 left-0 w-full"
+        className="top-0 left-0 w-full"
       />
-      {/* <div className="wave-overlay"></div> Add overlay for reflection effect */}
-    </div>
   );
 };
 
