@@ -61,9 +61,90 @@
 
 // export default WaveAnimation;
 
+// import React, { useEffect, useRef, useState } from "react";
+// import "./WaveImage.css"; // Import the CSS file
+// import { img6 } from "../../assets/image";
+
+// const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
+//   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+//   const [image, setImage] = useState<HTMLImageElement | null>(null);
+
+//   useEffect(() => {
+//     // Load the image
+//     const img = new Image();
+//     img.src = img6;
+//     img.onload = () => {
+//       setImage(img);
+//     };
+//   }, [imageUrl]);
+
+//   useEffect(() => {
+//     if (!image) return; // Wait for the image to load
+
+//     const canvas = canvasRef.current;
+//     if (!canvas) return;
+//     const ctx = canvas.getContext("2d");
+//     if (!ctx) return;
+
+//     const resizeCanvas = () => {
+//       canvas.width = window.innerWidth;
+//       canvas.height = (window.innerWidth * image.height) / image.width; // Maintain aspect ratio
+//     };
+
+//     resizeCanvas();
+//     window.addEventListener("resize", resizeCanvas);
+
+//     let time = 0; // Time variable for animation
+
+//     const drawWaterEffect = () => {
+//       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+//       // Apply wave distortion to the image
+//       for (let x = 0; x < canvas.width; x++) {
+//         const waveOffset = Math.sin(x * 0.02 + time) * 10; // Wave distortion
+//         ctx.drawImage(
+//           image,
+//           x, // Source X
+//           0, // Source Y
+//           1, // Source width (1 pixel column)
+//           image.height, // Source height
+//           x, // Destination X
+//           waveOffset, // Destination Y (apply distortion)
+//           1, // Destination width
+//           canvas.height // Destination height
+//         );
+//       }
+
+//       // Update time for animation
+//       time += 0.05;
+
+//       requestAnimationFrame(drawWaterEffect);
+//     };
+
+//     drawWaterEffect();
+
+//     return () => {
+//       cancelAnimationFrame(drawWaterEffect as any);
+//       window.removeEventListener("resize", resizeCanvas);
+//     };
+//   }, [image]);
+
+//   return (
+//     <div className="wave-container">
+//       <canvas
+//         ref={canvasRef}
+//         className="absolute top-0 left-0 w-full"
+//       />
+//       <div className="wave-overlay"></div> {/* Add overlay for reflection effect */}
+//     </div>
+//   );
+// };
+
+// export default WaveAnimation;
+
 import React, { useEffect, useRef, useState } from "react";
 import "./WaveImage.css"; // Import the CSS file
-import { img6 } from "../../assets/image";
+import img6 from "../../../src/assets/image6.jpg"; // Import the image correctly
 
 const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -72,7 +153,7 @@ const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
   useEffect(() => {
     // Load the image
     const img = new Image();
-    img.src = img6;
+    img.src = img6; // Use the imported image directly (no curly braces)
     img.onload = () => {
       setImage(img);
     };
@@ -87,8 +168,9 @@ const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = (window.innerWidth * image.height) / image.width; // Maintain aspect ratio
+      // Set canvas size to match the image dimensions
+      canvas.width = image.width;
+      canvas.height = image.height;
     };
 
     resizeCanvas();
@@ -101,7 +183,11 @@ const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
 
       // Apply wave distortion to the image
       for (let x = 0; x < canvas.width; x++) {
-        const waveOffset = Math.sin(x * 0.02 + time) * 10; // Wave distortion
+        // Use multiple sine waves for a more complex water effect
+        const waveOffset1 = Math.sin(x * 0.02 + time) * 10; // First wave layer
+        const waveOffset2 = Math.sin(x * 0.05 + time * 0.7) * 5; // Second wave layer
+        const waveOffset = waveOffset1 + waveOffset2; // Combine wave layers
+
         ctx.drawImage(
           image,
           x, // Source X
@@ -130,12 +216,12 @@ const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
   }, [image]);
 
   return (
-    <div className="wave-container">
+    <div className="wave-container" >
       <canvas
         ref={canvasRef}
         className="absolute top-0 left-0 w-full"
       />
-      <div className="wave-overlay"></div> {/* Add overlay for reflection effect */}
+      {/* <div className="wave-overlay"></div> Add overlay for reflection effect */}
     </div>
   );
 };

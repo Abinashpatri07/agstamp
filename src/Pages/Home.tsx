@@ -43,7 +43,7 @@ const Home: React.FC = () => {
             alt="img6"
             className="w-full max-h-80 object-cover rounded-lg"
           /> */}
-         <div style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
+        <div style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
       <WaveAnimation imageUrl={img6} /> {/* Pass the local image URL */}
     </div> 
 
@@ -62,7 +62,7 @@ const Home: React.FC = () => {
 
 
       {/* Header Section */}
-      <header className="w-full flex flex-col items-center text-center mt-14">
+      <header className="w-full flex flex-col items-center text-center -mt-16">
         <h1 className="text-4xl font-bold text-red-300">AG STAMP</h1>
         <p className="text-lg font-medium mt-2">Specializing in philately of Russia & Area</p>
       </header>
