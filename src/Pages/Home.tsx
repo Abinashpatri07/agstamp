@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { img1, img2, img3, img4, img5, img6 } from "../assets/image"; // Import the top image
-import WaveAnimation from "../Components/WaveAnimation/WaveAnimation";
 import StampCarousel from "./StampCarousel";
+import WaveAnimation from "../Components/WaveAnimation/WaveAnimation";
 
 
 const Home: React.FC = () => {
@@ -36,16 +36,19 @@ const Home: React.FC = () => {
       /> */}
      
         {/* Image */}
-        <div className="relative w-full">
+        {/* <div className="relative w-full"> */}
         {/* Image */}
-          <img 
+          {/* <img 
             src={img6}  
             alt="img6"
             className="w-full max-h-80 object-cover rounded-lg"
-          />
+          /> */}
+         <div style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
+      <WaveAnimation imageUrl={img6} /> {/* Pass the local image URL */}
+    </div> 
 
           {/* Wave Effect */}
-          <div className="absolute bottom-5 md:bottom-10 lg:bottom-14 left-0 w-full">
+          {/* <div className="absolute bottom-5 md:bottom-10 lg:bottom-14 left-0 w-full">
           <WaveAnimation offsetX={0} opacity={0.8} color="#3b82f6" />
           </div>
           <div className="absolute bottom-5 md:bottom-10 lg:bottom-14 left-0 w-full">
@@ -53,8 +56,8 @@ const Home: React.FC = () => {
           </div>
           <div className="absolute bottom-5 md:bottom-10 lg:bottom-14 left-0 w-full">
           <WaveAnimation offsetX={-1} opacity={0.9} color="#1e40af" />
-          </div>
-      </div>
+          </div> */}
+      {/* </div> */}
 
 
 
