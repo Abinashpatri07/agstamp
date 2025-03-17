@@ -6,7 +6,7 @@ import WaveAnimation from "../Components/WaveAnimation/WaveAnimation";
 
 const Home: React.FC = () => {
   const [email, setEmail] = useState("");
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  // const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const handleSubscribe = () => {
     if (!email) {
