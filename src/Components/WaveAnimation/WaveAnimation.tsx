@@ -117,7 +117,7 @@ const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
       const containerWidth = container.clientWidth;
       const containerHeight = container.clientHeight;
 
-      const imageAspectRatio = image.width / image.height*1.3;
+      const imageAspectRatio = image.width / image.height*1.4;
       const containerAspectRatio = containerWidth / containerHeight;
 
       let canvasWidth, canvasHeight;
