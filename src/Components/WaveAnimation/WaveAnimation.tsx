@@ -1,69 +1,5 @@
-// import React, { useEffect, useRef } from "react";
-
-// const WaveAnimation: React.FC<{ offsetX?: number; opacity?: number; color?: string }> = ({ offsetX = 0, opacity = 1, color = "#3b82f6" }) => {
-//   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-//   useEffect(() => {
-//     const canvas = canvasRef.current;
-//     if (!canvas) return;
-//     const ctx = canvas.getContext("2d");
-//     if (!ctx) return;
-
-//     const resizeCanvas = () => {
-//       canvas.width = window.innerWidth;
-//       canvas.height = window.innerWidth < 640 ? 60 : 100;
-//     };
-
-//     resizeCanvas();
-//     window.addEventListener("resize", resizeCanvas);
-
-//     let waveOffset = offsetX; // Each wave has a different offset
-//     const waveHeight = window.innerWidth < 640 ? 10 : 20;
-//     const waveFrequency = window.innerWidth < 640 ? 0.03 : 0.02;
-//     const waveSpeed = window.innerWidth < 640 ? 0.04 : 0.05;
-
-//     const drawWave = () => {
-//       ctx.clearRect(0, 0, canvas.width, canvas.height);
-//       ctx.fillStyle = color;
-//       ctx.globalAlpha = opacity; // Adjust opacity for layering effect
-//       ctx.beginPath();
-
-//       for (let x = 0; x < canvas.width; x++) {
-//         const y = Math.sin(x * waveFrequency + waveOffset) * waveHeight + waveHeight;
-//         ctx.lineTo(x, y);
-//       }
-
-//       ctx.lineTo(canvas.width, canvas.height);
-//       ctx.lineTo(0, canvas.height);
-//       ctx.closePath();
-//       ctx.fill();
-
-//       waveOffset += waveSpeed;
-//       requestAnimationFrame(drawWave);
-//     };
-
-//     drawWave();
-
-//     return () => {
-//       cancelAnimationFrame(drawWave as any);
-//       window.removeEventListener("resize", resizeCanvas);
-//     };
-//   }, [offsetX, opacity, color]);
-
-//   return (
-//     <canvas
-//       ref={canvasRef}
-//       className="absolute top-0 left-0 w-full"
-//     />
-//   );
-// };
-
-
-// export default WaveAnimation;
 
 // import React, { useEffect, useRef, useState } from "react";
-// import "./WaveImage.css"; // Import the CSS file
-// import { img6 } from "../../assets/image";
 
 // const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
 //   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -72,7 +8,7 @@
 //   useEffect(() => {
 //     // Load the image
 //     const img = new Image();
-//     img.src = img6;
+//     img.src = imageUrl; // Use the imported image directly (no curly braces)
 //     img.onload = () => {
 //       setImage(img);
 //     };
@@ -87,8 +23,9 @@
 //     if (!ctx) return;
 
 //     const resizeCanvas = () => {
-//       canvas.width = window.innerWidth;
-//       canvas.height = (window.innerWidth * image.height) / image.width; // Maintain aspect ratio
+//       // Set canvas size to match the image dimensions
+//       canvas.width = image.width;
+//       canvas.height = image.height;
 //     };
 
 //     resizeCanvas();
@@ -101,7 +38,11 @@
 
 //       // Apply wave distortion to the image
 //       for (let x = 0; x < canvas.width; x++) {
-//         const waveOffset = Math.sin(x * 0.02 + time) * 10; // Wave distortion
+//         // Use multiple sine waves for a more complex water effect
+//         const waveOffset1 = Math.sin(x * 0.02 + time) * 10; // First wave layer
+//         const waveOffset2 = Math.sin(x * 0.05 + time * 0.7) * 5; // Second wave layer
+//         const waveOffset = waveOffset1 + waveOffset2; // Combine wave layers
+
 //         ctx.drawImage(
 //           image,
 //           x, // Source X
@@ -130,17 +71,17 @@
 //   }, [image]);
 
 //   return (
-//     <div className="wave-container">
-//       <canvas
+//      <div className="flex mb-10">
+//        <canvas
 //         ref={canvasRef}
-//         className="absolute top-0 left-0 w-full"
+//         className="top-0 left-0 w-full rounded-2xl"
 //       />
-//       <div className="wave-overlay"></div> {/* Add overlay for reflection effect */}
-//     </div>
+//      </div>
 //   );
 // };
 
 // export default WaveAnimation;
+
 
 import React, { useEffect, useRef, useState } from "react";
 
@@ -149,16 +90,18 @@ const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
 
   useEffect(() => {
-    // Load the image
     const img = new Image();
-    img.src = imageUrl; // Use the imported image directly (no curly braces)
+    img.src = imageUrl;
     img.onload = () => {
       setImage(img);
+    };
+    img.onerror = (error) => {
+      console.error("Failed to load image:", error);
     };
   }, [imageUrl]);
 
   useEffect(() => {
-    if (!image) return; // Wait for the image to load
+    if (!image) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -166,60 +109,95 @@ const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      // Set canvas size to match the image dimensions
-      canvas.width = image.width;
-      canvas.height = image.height;
+      if (!canvas || !image) return;
+
+      const container = canvas.parentElement;
+      if (!container) return;
+
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+
+      const imageAspectRatio = image.width / image.height*1.3;
+      const containerAspectRatio = containerWidth / containerHeight;
+
+      let canvasWidth, canvasHeight;
+
+      if (containerAspectRatio > imageAspectRatio) {
+        canvasHeight = containerHeight;
+        canvasWidth = canvasHeight * imageAspectRatio;
+      } else {
+        canvasWidth = containerWidth;
+        canvasHeight = canvasWidth / imageAspectRatio;
+      }
+
+      if (canvasWidth <= 0 || canvasHeight <= 0) {
+        console.error("Invalid canvas dimensions:", canvasWidth, canvasHeight);
+        return;
+      }
+
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
     };
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    let time = 0; // Time variable for animation
+    let time = 0;
 
     const drawWaterEffect = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      try {
+        if (!ctx || !image) return;
 
-      // Apply wave distortion to the image
-      for (let x = 0; x < canvas.width; x++) {
-        // Use multiple sine waves for a more complex water effect
-        const waveOffset1 = Math.sin(x * 0.02 + time) * 10; // First wave layer
-        const waveOffset2 = Math.sin(x * 0.05 + time * 0.7) * 5; // Second wave layer
-        const waveOffset = waveOffset1 + waveOffset2; // Combine wave layers
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        ctx.drawImage(
-          image,
-          x, // Source X
-          0, // Source Y
-          1, // Source width (1 pixel column)
-          image.height, // Source height
-          x, // Destination X
-          waveOffset, // Destination Y (apply distortion)
-          1, // Destination width
-          canvas.height // Destination height
-        );
+        for (let x = 0; x < canvas.width; x++) {
+          const waveOffset1 = Math.sin(x * 0.02 + time) * 10;
+          const waveOffset2 = Math.sin(x * 0.05 + time * 0.7) * 5;
+          const waveOffset = waveOffset1 + waveOffset2;
+
+          const sourceX = x * (image.width / canvas.width);
+          const sourceWidth = image.width / canvas.width;
+
+          if (sourceX < 0 || sourceWidth <= 0) {
+            console.error("Invalid sourceX or sourceWidth:", sourceX, sourceWidth);
+            return;
+          }
+
+          ctx.drawImage(
+            image,
+            sourceX,
+            0,
+            sourceWidth,
+            image.height,
+            x,
+            waveOffset,
+            1,
+            canvas.height
+          );
+        }
+
+        time += 0.05;
+        requestAnimationFrame(drawWaterEffect);
+      } catch (error) {
+        console.error("Error in drawWaterEffect:", error);
       }
-
-      // Update time for animation
-      time += 0.05;
-
-      requestAnimationFrame(drawWaterEffect);
     };
 
-    drawWaterEffect();
+    let animationFrameId = requestAnimationFrame(drawWaterEffect);
 
     return () => {
-      cancelAnimationFrame(drawWaterEffect as any);
+      cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", resizeCanvas);
     };
   }, [image]);
 
   return (
-     <div className="flex mb-10">
-       <canvas
+    <div className="flex mb-10">
+      <canvas
         ref={canvasRef}
         className="top-0 left-0 w-full rounded-2xl"
       />
-     </div>
+    </div>
   );
 };
 
