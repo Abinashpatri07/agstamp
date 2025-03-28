@@ -9,4 +9,9 @@ import bgImg from './stampBg.png'
  import dealer1 from "./dealer1.jpg"
  import dealer2 from "./dealer2.gif"
 import img6 from "./image6.jpg"
-export {img1,img2,img3,img4, img5, img6, contactus,logo,bgImg, dealer1,dealer2}
+import banner from "./agstamp_banner.jpg"
+import img7 from "./agstamp_ussr.jpg"
+import img8 from "./agstamp_rsfsr.jpg"
+import img9 from "./agstamp_imperial.jpg"
+
+export {img1,img2,img3,img4, img5, img6, contactus,logo,bgImg, dealer1,dealer2, banner, img7, img8, img9}

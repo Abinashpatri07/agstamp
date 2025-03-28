@@ -156,7 +156,7 @@
 // export default Home;
 
 import React, { useState } from "react";
-import { img1, img2, img3, img4, img5, img6 } from "../assets/image"; // Import the top image
+import { banner, img3, img4, img5, img7, img8, img9} from "../assets/image"; // Import the top image
 import StampCarousel from "./StampCarousel";
 import WaveAnimation from "../Components/WaveAnimation/WaveAnimation";
 
@@ -173,18 +173,19 @@ const Home: React.FC = () => {
   };
 
   const stampCategories = [
-    { name: "Imperial Russia Stamps", image: img1 },
-    { name: "RSFSR Stamps", image: img2 },
+    { name: "Imperial Russia Stamps", image: img9 },
+    { name: "RSFSR Stamps", image: img7 },
     { name: "USSR Stamps", image: img3 },
     { name: "Zemstvo Stamps", image: img4 },
     { name: "Postal History", image: img5 },
+    { name: "USSR Stamps", image: img8 },
   ];
 
   return (
     <div className="flex flex-col items-center w-full min-h-screen bg-blue-500 text-white text-center px-6 py-8">
       {/* WaveAnimation Section */}
       <div className="relative w-full overflow-hidden">
-        <WaveAnimation imageUrl={img6} /> {/* Pass the local image URL */}
+        <WaveAnimation imageUrl={banner} /> {/* Pass the local image URL */}
       </div>
 
       {/* Header Section */}
