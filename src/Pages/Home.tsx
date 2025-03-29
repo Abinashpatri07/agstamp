@@ -156,7 +156,7 @@
 // export default Home;
 
 import React, { useState } from "react";
-import { banner, img3, img4, img5, img7, img8, img9} from "../assets/image"; // Import the top image
+import { banner, img1, img10, img2, img3, img4, img5, img7, img8, img9} from "../assets/image"; // Import the top image
 import StampCarousel from "./StampCarousel";
 import WaveAnimation from "../Components/WaveAnimation/WaveAnimation";
 
@@ -179,6 +179,9 @@ const Home: React.FC = () => {
     { name: "Zemstvo Stamps", image: img4 },
     { name: "Postal History", image: img5 },
     { name: "USSR Stamps", image: img8 },
+    { name: "RSFSR Stamps", image: img10 },
+    { name: "Postal History", image: img1 },
+    { name: "RSFSR Stamps", image: img2 },
   ];
 
   return (
