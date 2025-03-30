@@ -59,7 +59,7 @@ const StampCarousel: React.FC<StampCarouselProps> = ({ stampCategories }) => {
         {stampCategories.map((stamp, index) => (
           <div
             key={index}
-            className={`bg-blue-700 rounded-lg shadow-lg overflow-hidden text-center p-4 transition-transform duration-300 ${
+            className={`bg-blue-800 rounded-lg shadow-lg overflow-hidden text-amber-50 text-center p-4 transition-transform duration-300 ${
               hoveredIndex === index ? "scale-110" : "scale-100"
             }`}
             onMouseEnter={() => setHoveredIndex(index)}

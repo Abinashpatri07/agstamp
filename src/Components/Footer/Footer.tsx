@@ -43,7 +43,7 @@ import { dealer1, dealer2 } from "../../assets/image";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-blue-500 text-white py-4 w-full mt-auto">
+    <footer className="bg-white text-red-900 py-4 w-full mt-auto">
       <div className="flex flex-col md:flex-row justify-between items-center px-4 sm:px-6 mx-auto">
         
         {/* Left-aligned content: Image + Paragraph + Image */}

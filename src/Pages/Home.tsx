@@ -185,7 +185,7 @@ const Home: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center w-full min-h-screen bg-blue-500 text-white text-center px-6 py-8">
+    <div className="flex flex-col items-center w-full min-h-screen bg-white text-red-700 text-center px-6 py-8">
       {/* WaveAnimation Section */}
       <div className="relative w-full overflow-hidden">
         <WaveAnimation imageUrl={banner} /> {/* Pass the local image URL */}
@@ -193,7 +193,7 @@ const Home: React.FC = () => {
 
       {/* Header Section */}
       <header className="w-full flex flex-col items-center text-center mt-0">
-        <h1 className="text-4xl font-bold text-red-300">AG STAMP</h1>
+        <h1 className="text-4xl font-bold text-blue-800">AG STAMP</h1>
         <p className="text-lg font-medium mt-2">Specializing in philately of Russia & Area</p>
       </header>
 
@@ -205,7 +205,7 @@ const Home: React.FC = () => {
         </p>
 
         {/* eBay Sales Section */}
-        <h2 className="text-2xl font-bold text-red-300 mt-10">Our Sales Platform</h2>
+        <h2 className="text-2xl font-bold text-blue-800 mt-10">Our Sales Platform</h2>
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mt-4">
           {/* eBay Logo */}
@@ -254,7 +254,7 @@ const Home: React.FC = () => {
       </main>
 
       {/* Contact Section */}
-      <h2 className="text-2xl font-bold text-red-300 mt-10">Contact Us</h2>
+      <h2 className="text-2xl font-bold text-blue-800 mt-10">Contact Us</h2>
       <p className="text-lg font-medium max-w-3xl text-center px-4 mt-2">
         For inquiries, sales announcements, or specific stamp requests, feel free to reach out to us via{" "}
         <a
@@ -266,7 +266,7 @@ const Home: React.FC = () => {
       </p>
 
       {/* Stamp Categories Section */}
-      <h2 className="text-2xl font-bold text-red-300 mt-10">Displaying Different Stamp Categories</h2>
+      <h2 className="text-2xl font-bold text-blue-800 mt-10">Displaying Different Stamp Categories</h2>
       <div className="w-full px-[10%] text-sm">
         <StampCarousel stampCategories={stampCategories} />
       </div>
@@ -275,19 +275,19 @@ const Home: React.FC = () => {
       <div className="mt-16 flex flex-col md:flex-row items-center bg-blue-800 py-3 rounded-xl justify-center lg:justify-around w-full gap-4 px-4">
         {/* Subscription Text */}
         <div className="text-sm md:text-lg lg:text-xl w-full lg:w-2/5 text-center font-medium text-gray-100 leading-normal">
-          Please <span className="text-blue-400">subscribe to our mailing list!</span>
+          Please <span className="text-white">subscribe to our mailing list!</span>
         </div>
 
         {/* Input & Button */}
-        <div className="flex md:gap-4 bg-blue-900 px-4 py-3 items-center rounded-xl w-full lg:w-3/5 justify-between">
+        <div className="flex md:gap-4 bg-white px-4 py-3 items-center rounded-xl w-full lg:w-3/5 justify-between">
           <input
-            className="bg-transparent text-gray-100 font-semibold lg:text-lg text-sm px-4 py-2 outline-none w-full placeholder-gray-300"
+            className="bg-transparent text-gray-100 font-semibold lg:text-lg text-sm px-4 py-2 outline-none w-full placeholder-red-800"
             placeholder="Email@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <button
-            className="rounded-lg lg:text-lg text-xs font-serif bg-gray-900 text-white px-6 py-3 cursor-pointer hover:bg-gray-700 transition"
+            className="rounded-lg lg:text-lg text-xs font-serif bg-blue-800 text-white px-6 py-3 cursor-pointer hover:bg-gray-700 transition"
             onClick={handleSubscribe}
           >
             Subscribe

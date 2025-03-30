@@ -84,6 +84,119 @@
 
 // export default Header;
 
+// import React, { useState, useEffect, useRef } from "react";
+// import { Link, useLocation } from "react-router-dom";
+// import { Menu, ShoppingCart } from "lucide-react"; // Import cart icon
+// import { useCart } from "../../Pages/CartContext";
+// import { logo } from "../../assets/image";
+
+//  // Import useCart hook
+
+// const Header: React.FC = () => {
+//   const [isOpen, setIsOpen] = useState(false);
+//   const location = useLocation();
+//   const menuRef = useRef<HTMLDivElement>(null);
+//   const { cart } = useCart(); // Get cart data
+
+//   // Calculate total cart items
+//   const cartCount = cart.reduce((total: any, item: { quantity: any; }) => total + item.quantity, 0);
+
+//   useEffect(() => {
+//     const handleClickOutside = (event: MouseEvent) => {
+//       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+//         setIsOpen(false);
+//       }
+//     };
+
+//     if (isOpen) {
+//       document.addEventListener("mousedown", handleClickOutside);
+//     } else {
+//       document.removeEventListener("mousedown", handleClickOutside);
+//     }
+
+//     return () => {
+//       document.removeEventListener("mousedown", handleClickOutside);
+//     };
+//   }, [isOpen]);
+
+//   return (
+//     <header className="bg-blue-500 text-white fixed top-0 left-0 w-full z-50">
+//       <div className="px-6 py-4 flex justify-between items-center">
+//         {/* Logo */}
+        
+//         {/* <div className="flex flex-col items-center space-x-3 text-[#11295a]"> */}
+//           <Link to="/" className="w-30 h-18 bg-white flex items-center justify-center rounded-lg cursor-pointer overflow-hidden">
+//             <img src={logo} alt="Logo" className="w-full h-full object-contain" />
+//           </Link>
+//           {/* <Link to="/" className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-blueRibbon-950">
+//             AG Stamp
+//           </Link> */}
+//         {/* </div> */}
+
+
+
+//         {/* Desktop Navigation */}
+//         <nav className="hidden md:flex gap-5 font-semibold text-sm md:text-base">
+//           <Link to="/" className={`hover:text-black ${location.pathname === "/" ? "border-t-2 border-black" : ""}`}>Home</Link>
+//           <Link to="/about-us" className={`hover:text-black ${location.pathname === "/about-us" ? "border-t-2 border-black" : ""}`}>About Us</Link>
+//           <a href="http://agstamp.com/retailsales.htm" className={`hover:text-black ${location.pathname === "/ebay-sales" ? "border-t-2 border-black" : ""}`} target="_blank" onClick={() => setIsOpen(false)}>Old Products</a>
+//           <Link to="/retail-sales" className={`hover:text-black ${location.pathname === "/retail-sales" ? "border-t-2 border-black" : ""}`}>Products</Link>
+//           <Link to="/contact-us" className={`hover:text-black ${location.pathname === "/contact-us" ? "border-t-2 border-black" : ""}`}>Contact Us</Link>
+//         </nav>
+
+//         {/* Right Side - Login & Cart */}
+//         <div className="flex items-center space-x-4">
+//           <button className="bg-[#11295a] text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-400">
+//             Login
+//           </button>
+
+//           {/* Cart Icon with Badge */}
+//           <Link to="/cart" className="relative">
+//             <ShoppingCart size={28} className="text-white hover:text-gray-300 transition" />
+            
+//             {/* Show cart count only if there are items */}
+//             {cartCount > 0 && (
+//               <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+//                 {cartCount}
+//               </span>
+//             )}
+//           </Link>
+
+//           {/* Mobile Menu Button */}
+//           <button onClick={() => setIsOpen(!isOpen)} className="md:hidden focus:outline-none">
+//             <Menu size={28} />
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* Mobile Navigation */}
+//       {isOpen && (
+//         <nav ref={menuRef} className="md:hidden bg-blue-700 p-4 flex flex-col space-y-4 text-center font-semibold">
+//           <Link to="/" className={`hover:text-black ${location.pathname === "/" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>Home</Link>
+//           <Link to="/about-us" className={`hover:text-black ${location.pathname === "/about-us" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>About Us</Link>
+//           <a href="http://agstamp.com/retailsales.htm" className={`hover:text-black ${location.pathname === "/ebay-sales" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>Old Products</a>
+//           <Link to="/retail-sales" className={`hover:text-black ${location.pathname === "/retail-sales" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>Products</Link>
+//           <Link to="/contact-us" className={`hover:text-black ${location.pathname === "/contact-us" ? "border-t-2 border-black" : ""}`} onClick={() => setIsOpen(false)}>Contact Us</Link>
+          
+//           {/* Cart Link in Mobile Menu */}
+//           <Link to="/cart" className="hover:text-black flex justify-center items-center gap-2" onClick={() => setIsOpen(false)}>
+//             <ShoppingCart size={24} /> Cart
+            
+//             {/* Show cart count only if there are items */}
+//             {cartCount > 0 && (
+//               <span className="bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+//                 {cartCount}
+//               </span>
+//             )}
+//           </Link>
+//         </nav>
+//       )}
+//     </header>
+//   );
+// };
+
+// export default Header;
+
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, ShoppingCart } from "lucide-react"; // Import cart icon
@@ -120,7 +233,7 @@ const Header: React.FC = () => {
   }, [isOpen]);
 
   return (
-    <header className="bg-blue-500 text-white fixed top-0 left-0 w-full z-50">
+    <header className="bg-white text-blue-800 fixed top-0 left-0 w-full z-50">
       <div className="px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         
@@ -146,7 +259,7 @@ const Header: React.FC = () => {
 
         {/* Right Side - Login & Cart */}
         <div className="flex items-center space-x-4">
-          <button className="bg-[#11295a] text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-400">
+          <button className="bg-blue-800 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-400">
             Login
           </button>
 
