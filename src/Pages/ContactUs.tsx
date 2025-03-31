@@ -31,8 +31,8 @@ const ContactUs: React.FC = () => {
   };
 
   const contactData = [
-    { subcategory: "Email", name: "contact@example.com" },
-    { subcategory: "Phone", name: "+1 234 567 890" },
+    { subcategory: "Email", name: "info@agstamp.com" },
+    // { subcategory: "Phone", name: "+1 234 567 890" },
     { subcategory: "Location", name: "San Francisco, CA" },
   ];
 
@@ -146,9 +146,9 @@ const ContactUs: React.FC = () => {
                             <p className="text-lg sm:text-xl mb-2">
                               <div className='flex justify-center'><div className='!text-gray-900 mr-3 font-bold'>Email:</div> <div>{contactData.find(item => item.subcategory === "Email")?.name || "Not available"}</div></div>
                             </p>
-                            <p className="text-lg sm:text-xl mb-2">
+                            {/* <p className="text-lg sm:text-xl mb-2">
                             <div className='flex justify-center'><div className='!text-gray-900 mr-3 font-bold'>Phone:</div> <div>{contactData.find(item => item.subcategory === "Phone")?.name || "Not available"}</div></div>
-                            </p>
+                            </p> */}
                             <p className="text-lg sm:text-xl mb-4">
                             <div className='flex justify-center items-center'><div className='!text-gray-900 mr-3 font-bold'>Based In:</div> <div>{contactData.find(item => item.subcategory === "Location")?.name || "Not available"}</div></div>
                             </p>

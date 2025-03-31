@@ -265,7 +265,7 @@ const Header: React.FC = () => {
 
           {/* Cart Icon with Badge */}
           <Link to="/cart" className="relative">
-            <ShoppingCart size={28} className="text-white hover:text-gray-300 transition" />
+            <ShoppingCart size={28} className="text-blue-800 hover:text-gray-300 transition" />
             
             {/* Show cart count only if there are items */}
             {cartCount > 0 && (
