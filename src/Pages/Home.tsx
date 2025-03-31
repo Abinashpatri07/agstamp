@@ -216,7 +216,7 @@ const Home: React.FC = () => {
           />
 
           {/* eBay Sales Announcement */}
-          <p className="text-lg text-center md:text-left">
+          <p className="text-lg text-center md:text-left font-medium">
             Most of our sales take place on{" "}
             <a
               href="https://ebay.com"
@@ -229,7 +229,7 @@ const Home: React.FC = () => {
           </p>
         </div>
 
-        <p className="mt-2">
+        <p className="mt-2 font-medium">
           Follow our{" "}
           <a
             href="https://ebay.com"
@@ -242,7 +242,7 @@ const Home: React.FC = () => {
           to view current offerings.
         </p>
 
-        <p className="mt-2">
+        <p className="mt-2 font-medium">
           For sale announcements, contact us via{" "}
           <a
             href="mailto:info@example.com"
