@@ -129,6 +129,8 @@ const WaveAnimation: React.FC<{ imageUrl: string; backgroundColor?: string }> = 
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [dpr, setDpr] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
+  const animationFrameRef = useRef<number>(0);
+  const timeRef = useRef<number>(0);
 
   useEffect(() => {
     setDpr(window.devicePixelRatio || 1);
@@ -157,6 +159,16 @@ const WaveAnimation: React.FC<{ imageUrl: string; backgroundColor?: string }> = 
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { alpha: backgroundColor === 'transparent' });
     if (!ctx) return;
+
+    // Optimization: Pre-calculate wave parameters
+    const waveParams = {
+      timeIncrement: isMobile ? 0.08 : 0.05,
+      waveHeight: isMobile ? 12 : 10,
+      waveFrequency: isMobile ? 0.02 : 0.02,
+      waveDetail: isMobile ? 0.05 : 0.05,
+      waveDetailFactor: 0.7,
+      waveHeightFactor: 0.6
+    };
 
     const resizeCanvas = () => {
       if (!canvas || !image) return;
@@ -196,7 +208,14 @@ const WaveAnimation: React.FC<{ imageUrl: string; backgroundColor?: string }> = 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    let time = 0;
+    // Optimization: Create an offscreen canvas for the base image
+    const offscreenCanvas = document.createElement('canvas');
+    const offscreenCtx = offscreenCanvas.getContext('2d');
+    if (offscreenCtx) {
+      offscreenCanvas.width = image.width;
+      offscreenCanvas.height = image.height;
+      offscreenCtx.drawImage(image, 0, 0);
+    }
 
     const drawWaterEffect = () => {
       try {
@@ -213,46 +232,48 @@ const WaveAnimation: React.FC<{ imageUrl: string; backgroundColor?: string }> = 
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
 
-        // Increased speed for mobile (higher time increment)
-        const timeIncrement = isMobile ? 0.08 : 0.05; // Mobile waves move faster
-        const waveHeight = isMobile ? 12 : 10;
-        const waveFrequency = isMobile ? 0.02 : 0.02;
-        const waveDetail = isMobile ? 0.05 : 0.05;
+        // Optimization: Reduce the number of slices on mobile
+        const sliceDensity = isMobile ? 2 : 1; // Render every 2nd pixel on mobile
+        const width = canvas.width / dpr;
 
-        for (let x = 0; x < canvas.width / dpr; x++) {
-          const waveOffset1 = Math.sin(x * waveFrequency + time) * waveHeight;
-          const waveOffset2 = Math.sin(x * waveDetail + time * 0.7) * (waveHeight * 0.6);
+        for (let x = 0; x < width; x += sliceDensity) {
+          const waveOffset1 = Math.sin(x * waveParams.waveFrequency + timeRef.current) * waveParams.waveHeight;
+          const waveOffset2 = Math.sin(x * waveParams.waveDetail + timeRef.current * waveParams.waveDetailFactor) * 
+                            (waveParams.waveHeight * waveParams.waveHeightFactor);
           const waveOffset = waveOffset1 + waveOffset2;
 
-          const sourceX = x * (image.width / (canvas.width / dpr));
-          const sourceWidth = image.width / (canvas.width / dpr);
+          const sourceX = x * (image.width / width);
+          const sourceWidth = image.width / width * sliceDensity;
 
           if (sourceX < 0 || sourceWidth <= 0) continue;
 
+          // Use the offscreen canvas if available
+          const sourceImage = offscreenCanvas || image;
+          
           ctx.drawImage(
-            image,
+            sourceImage,
             sourceX,
             0,
             sourceWidth,
             image.height,
             x,
             waveOffset,
-            1,
+            sliceDensity, // Wider slices when skipping pixels
             canvas.height / dpr
           );
         }
 
-        time += timeIncrement;
-        requestAnimationFrame(drawWaterEffect);
+        timeRef.current += waveParams.timeIncrement;
+        animationFrameRef.current = requestAnimationFrame(drawWaterEffect);
       } catch (error) {
         console.error("Error in drawWaterEffect:", error);
       }
     };
 
-    let animationFrameId = requestAnimationFrame(drawWaterEffect);
+    animationFrameRef.current = requestAnimationFrame(drawWaterEffect);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      cancelAnimationFrame(animationFrameRef.current);
       window.removeEventListener("resize", resizeCanvas);
     };
   }, [image, dpr, backgroundColor, isMobile]);
