@@ -180,13 +180,6 @@ const WaveAnimation: React.FC<{ imageUrl: string; backgroundColor?: string }> = 
         canvasHeight = canvasWidth / imageAspectRatio;
       }
 
-      // Increase size for mobile
-      if (isMobile) {
-        const mobileScaleFactor = 1.3; // Increase this value to make the wave more prominent
-        canvasWidth *= mobileScaleFactor;
-        canvasHeight *= mobileScaleFactor;
-      }
-
       canvas.style.width = `${canvasWidth}px`;
       canvas.style.height = `${canvasHeight}px`;
       canvas.width = canvasWidth * dpr;
@@ -220,11 +213,11 @@ const WaveAnimation: React.FC<{ imageUrl: string; backgroundColor?: string }> = 
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
 
-        // Enhanced wave parameters for mobile
-        const timeIncrement = isMobile ? 0.03 : 0.05;
-        const waveHeight = isMobile ? 15 : 10; // Increased wave height for mobile
-        const waveFrequency = isMobile ? 0.01 : 0.02; // Slower frequency for more visible waves
-        const waveDetail = isMobile ? 0.02 : 0.05; // More detailed waves for mobile
+        // Increased speed for mobile (higher time increment)
+        const timeIncrement = isMobile ? 0.08 : 0.05; // Mobile waves move faster
+        const waveHeight = isMobile ? 12 : 10;
+        const waveFrequency = isMobile ? 0.02 : 0.02;
+        const waveDetail = isMobile ? 0.05 : 0.05;
 
         for (let x = 0; x < canvas.width / dpr; x++) {
           const waveOffset1 = Math.sin(x * waveFrequency + time) * waveHeight;
@@ -265,15 +258,10 @@ const WaveAnimation: React.FC<{ imageUrl: string; backgroundColor?: string }> = 
   }, [image, dpr, backgroundColor, isMobile]);
 
   return (
-    <div className="flex mb-10 overflow-hidden" style={{ backgroundColor }}>
+    <div className="flex mb-10" style={{ backgroundColor }}>
       <canvas
         ref={canvasRef}
         className="top-0 left-0 w-full rounded-2xl"
-        style={isMobile ? { 
-          transform: 'scale(1.1)',
-          marginLeft: '-5%',
-          width: '110%' 
-        } : {}}
       />
     </div>
   );
