@@ -119,170 +119,290 @@
 
 // export default WaveAnimation;
 
-import React, { useEffect, useRef, useState } from "react";
+// import React, { useEffect, useRef, useState } from "react";
 
-const WaveAnimation: React.FC<{ imageUrl: string; backgroundColor?: string }> = ({ 
-  imageUrl, 
-  backgroundColor = 'transparent' 
-}) => {
+// const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
+//   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+//   const [image, setImage] = useState<HTMLImageElement | null>(null);
+
+//   useEffect(() => {
+//     const img = new Image();
+//     img.src = imageUrl;
+//     img.onload = () => setImage(img);
+//     img.onerror = (error) => console.error("Failed to load image:", error);
+//   }, [imageUrl]);
+
+//   useEffect(() => {
+//     if (!image) return;
+
+//     const canvas = canvasRef.current;
+//     if (!canvas) return;
+//     const ctx = canvas.getContext("2d");
+//     if (!ctx) return;
+
+//     const resizeCanvas = () => {
+//       if (!canvas || !image) return;
+
+//       const container = canvas.parentElement;
+//       if (!container) return;
+
+//       const containerWidth = container.clientWidth;
+//       const containerHeight = container.clientHeight;
+
+//       const imageAspectRatio = (image.width / image.height) * 1.4;
+//       const containerAspectRatio = containerWidth / containerHeight;
+
+//       let canvasWidth, canvasHeight;
+
+//       if (containerAspectRatio > imageAspectRatio) {
+//         canvasHeight = containerHeight;
+//         canvasWidth = canvasHeight * imageAspectRatio;
+//       } else {
+//         canvasWidth = containerWidth;
+//         canvasHeight = canvasWidth / imageAspectRatio;
+//       }
+
+//       if (canvasWidth <= 0 || canvasHeight <= 0) {
+//         console.error("Invalid canvas dimensions:", canvasWidth, canvasHeight);
+//         return;
+//       }
+
+//       canvas.width = canvasWidth;
+//       canvas.height = canvasHeight;
+//     };
+
+//     resizeCanvas();
+//     window.addEventListener("resize", resizeCanvas);
+
+//     let time = 0;
+
+//     const drawWaterEffect = () => {
+//       try {
+//         if (!ctx || !image) return;
+
+//         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+//         // Check screen width and adjust speed
+//         const isMobile = window.innerWidth < 768;
+//         const speedFactor = isMobile ? 0.02 : 0.05; // Slower on mobile
+
+//         for (let x = 0; x < canvas.width; x++) {
+//           const waveOffset1 = Math.sin(x * 0.02 + time) * 10;
+//           const waveOffset2 = Math.sin(x * 0.05 + time * 0.7) * 5;
+//           const waveOffset = waveOffset1 + waveOffset2;
+
+//           const sourceX = x * (image.width / canvas.width);
+//           const sourceWidth = image.width / canvas.width;
+
+//           if (sourceX < 0 || sourceWidth <= 0) {
+//             console.error("Invalid sourceX or sourceWidth:", sourceX, sourceWidth);
+//             return;
+//           }
+
+//           ctx.drawImage(
+//             image,
+//             sourceX,
+//             0,
+//             sourceWidth,
+//             image.height,
+//             x,
+//             waveOffset,
+//             1,
+//             canvas.height
+//           );
+//         }
+
+//         time += speedFactor; // Adjusted speed based on device width
+//         requestAnimationFrame(drawWaterEffect);
+//       } catch (error) {
+//         console.error("Error in drawWaterEffect:", error);
+//       }
+//     };
+
+//     let animationFrameId = requestAnimationFrame(drawWaterEffect);
+
+//     return () => {
+//       cancelAnimationFrame(animationFrameId);
+//       window.removeEventListener("resize", resizeCanvas);
+//     };
+//   }, [image]);
+
+//   return (
+//     <div className="flex mb-10">
+//       <canvas ref={canvasRef} className="top-0 left-0 w-full rounded-2xl" />
+//     </div>
+//   );
+// };
+
+// export default WaveAnimation;
+
+
+import React, { useEffect, useRef } from "react";
+
+const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [image, setImage] = useState<HTMLImageElement | null>(null);
-  const [dpr, setDpr] = useState(1);
-  const [isMobile, setIsMobile] = useState(false);
-  const animationFrameRef = useRef<number>(0);
+  const imageRef = useRef<HTMLImageElement | null>(null);
+  const animationIdRef = useRef<number>(0);
   const timeRef = useRef<number>(0);
+  const lastFrameTimeRef = useRef<number>(0);
+  const frameIntervalRef = useRef<number>(1000 / 30); // Target 30fps
 
-  useEffect(() => {
-    setDpr(window.devicePixelRatio || 1);
-    const checkIfMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
-    return () => window.removeEventListener('resize', checkIfMobile);
-  }, []);
-
+  // Load image
   useEffect(() => {
     const img = new Image();
-    img.crossOrigin = "Anonymous";
     img.src = imageUrl;
     img.onload = () => {
-      setImage(img);
+      imageRef.current = img;
+      // Start animation only when image is loaded
+      if (canvasRef.current) {
+        setupCanvas();
+        startAnimation();
+      }
     };
-    img.onerror = (error) => {
-      console.error("Failed to load image:", error);
+    img.onerror = (error) => console.error("Failed to load image:", error);
+
+    return () => {
+      if (img) {
+        img.onload = null;
+        img.onerror = null;
+      }
     };
   }, [imageUrl]);
 
-  useEffect(() => {
-    if (!image) return;
-
+  // Canvas setup
+  const setupCanvas = () => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: backgroundColor === 'transparent' });
-    if (!ctx) return;
+    if (!canvas || !imageRef.current) return;
 
-    // Optimization: Pre-calculate wave parameters
-    const waveParams = {
-      timeIncrement: isMobile ? 0.08 : 0.05,
-      waveHeight: isMobile ? 12 : 10,
-      waveFrequency: isMobile ? 0.02 : 0.02,
-      waveDetail: isMobile ? 0.05 : 0.05,
-      waveDetailFactor: 0.7,
-      waveHeightFactor: 0.6
-    };
+    const container = canvas.parentElement;
+    if (!container) return;
 
-    const resizeCanvas = () => {
-      if (!canvas || !image) return;
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const image = imageRef.current;
 
-      const container = canvas.parentElement;
-      if (!container) return;
+    const imageAspectRatio = (image.width / image.height) * 1.4;
+    const containerAspectRatio = containerWidth / containerHeight;
 
-      const containerWidth = container.clientWidth;
-      const containerHeight = container.clientHeight;
+    let canvasWidth, canvasHeight;
 
-      const imageAspectRatio = image.width / image.height * 1.4;
-      const containerAspectRatio = containerWidth / containerHeight;
-
-      let canvasWidth, canvasHeight;
-
-      if (containerAspectRatio > imageAspectRatio) {
-        canvasHeight = containerHeight;
-        canvasWidth = canvasHeight * imageAspectRatio;
-      } else {
-        canvasWidth = containerWidth;
-        canvasHeight = canvasWidth / imageAspectRatio;
-      }
-
-      canvas.style.width = `${canvasWidth}px`;
-      canvas.style.height = `${canvasHeight}px`;
-      canvas.width = canvasWidth * dpr;
-      canvas.height = canvasHeight * dpr;
-
-      if (canvas.width <= 0 || canvas.height <= 0) {
-        console.error("Invalid canvas dimensions:", canvas.width, canvas.height);
-        return;
-      }
-
-      ctx.scale(dpr, dpr);
-    };
-
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    // Optimization: Create an offscreen canvas for the base image
-    const offscreenCanvas = document.createElement('canvas');
-    const offscreenCtx = offscreenCanvas.getContext('2d');
-    if (offscreenCtx) {
-      offscreenCanvas.width = image.width;
-      offscreenCanvas.height = image.height;
-      offscreenCtx.drawImage(image, 0, 0);
+    if (containerAspectRatio > imageAspectRatio) {
+      canvasHeight = containerHeight;
+      canvasWidth = canvasHeight * imageAspectRatio;
+    } else {
+      canvasWidth = containerWidth;
+      canvasHeight = canvasWidth / imageAspectRatio;
     }
 
-    const drawWaterEffect = () => {
-      try {
-        if (!ctx || !image) return;
-
-        // Clear with background color
-        if (backgroundColor !== 'transparent') {
-          ctx.fillStyle = backgroundColor;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-        } else {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-
-        // Optimization: Reduce the number of slices on mobile
-        const sliceDensity = isMobile ? 2 : 1; // Render every 2nd pixel on mobile
-        const width = canvas.width / dpr;
-
-        for (let x = 0; x < width; x += sliceDensity) {
-          const waveOffset1 = Math.sin(x * waveParams.waveFrequency + timeRef.current) * waveParams.waveHeight;
-          const waveOffset2 = Math.sin(x * waveParams.waveDetail + timeRef.current * waveParams.waveDetailFactor) * 
-                            (waveParams.waveHeight * waveParams.waveHeightFactor);
-          const waveOffset = waveOffset1 + waveOffset2;
-
-          const sourceX = x * (image.width / width);
-          const sourceWidth = image.width / width * sliceDensity;
-
-          if (sourceX < 0 || sourceWidth <= 0) continue;
-
-          // Use the offscreen canvas if available
-          const sourceImage = offscreenCanvas || image;
-          
-          ctx.drawImage(
-            sourceImage,
-            sourceX,
-            0,
-            sourceWidth,
-            image.height,
-            x,
-            waveOffset,
-            sliceDensity, // Wider slices when skipping pixels
-            canvas.height / dpr
-          );
-        }
-
-        timeRef.current += waveParams.timeIncrement;
-        animationFrameRef.current = requestAnimationFrame(drawWaterEffect);
-      } catch (error) {
-        console.error("Error in drawWaterEffect:", error);
+    // Mobile-specific adjustments
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      // Ensure canvas doesn't exceed viewport height
+      const maxMobileHeight = window.innerHeight * 0.8;
+      if (canvasHeight > maxMobileHeight) {
+        const scale = maxMobileHeight / canvasHeight;
+        canvasHeight = maxMobileHeight;
+        canvasWidth *= scale;
       }
+    }
+
+    // Set canvas dimensions
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    canvas.style.width = `${canvasWidth}px`;
+    canvas.style.height = `${canvasHeight}px`;
+  };
+
+  // Animation loop with frame rate control
+  const animate = (timestamp: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas || !imageRef.current) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Frame rate control
+    const deltaTime = timestamp - lastFrameTimeRef.current;
+    if (deltaTime < frameIntervalRef.current) {
+      animationIdRef.current = requestAnimationFrame(animate);
+      return;
+    }
+    lastFrameTimeRef.current = timestamp;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const image = imageRef.current;
+    const isMobile = window.innerWidth < 768;
+    const speedFactor = isMobile ? 0.02 : 0.05;
+    const stepSize = isMobile ? 2 : 1; // Process fewer pixels on mobile
+
+    // Optimized wave rendering
+    for (let x = 0; x < canvas.width; x += stepSize) {
+      const waveOffset1 = Math.sin(x * 0.02 + timeRef.current) * 10;
+      const waveOffset2 = Math.sin(x * 0.05 + timeRef.current * 0.7) * 5;
+      const waveOffset = waveOffset1 + waveOffset2;
+
+      const sourceX = x * (image.width / canvas.width);
+      const sourceWidth = image.width / canvas.width;
+
+      ctx.drawImage(
+        image,
+        sourceX,
+        0,
+        sourceWidth * stepSize,
+        image.height,
+        x,
+        waveOffset,
+        stepSize,
+        canvas.height
+      );
+    }
+
+    timeRef.current += speedFactor;
+    animationIdRef.current = requestAnimationFrame(animate);
+  };
+
+  const startAnimation = () => {
+    if (animationIdRef.current) {
+      cancelAnimationFrame(animationIdRef.current);
+    }
+    lastFrameTimeRef.current = performance.now();
+    animationIdRef.current = requestAnimationFrame(animate);
+  };
+
+  // Handle resize
+  useEffect(() => {
+    const handleResize = () => {
+      setupCanvas();
     };
 
-    animationFrameRef.current = requestAnimationFrame(drawWaterEffect);
+    const resizeObserver = new ResizeObserver(handleResize);
+    if (canvasRef.current?.parentElement) {
+      resizeObserver.observe(canvasRef.current.parentElement);
+    }
+
+    // Initial setup in case parent container isn't ready immediately
+    const timeoutId = setTimeout(() => {
+      if (imageRef.current && canvasRef.current) {
+        setupCanvas();
+      }
+    }, 100);
 
     return () => {
-      cancelAnimationFrame(animationFrameRef.current);
-      window.removeEventListener("resize", resizeCanvas);
+      clearTimeout(timeoutId);
+      resizeObserver.disconnect();
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
     };
-  }, [image, dpr, backgroundColor, isMobile]);
+  }, []);
 
   return (
-    <div className="flex mb-10" style={{ backgroundColor }}>
-      <canvas
-        ref={canvasRef}
-        className="top-0 left-0 w-full rounded-2xl"
+    <div key={window.innerWidth} className="flex -mb-10 md:mb-10 w-full h-auto min-h-[200px]">
+      <canvas 
+        ref={canvasRef} 
+        className="top-0 left-0 w-full h-auto rounded-2xl"
+        style={{ maxWidth: '100%' }}
       />
     </div>
   );
