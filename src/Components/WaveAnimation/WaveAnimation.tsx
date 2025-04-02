@@ -398,10 +398,10 @@ const WaveAnimation: React.FC<{ imageUrl: string }> = ({ imageUrl }) => {
   }, []);
 
   return (
-    <div key={window.innerWidth} className="flex -mb-10 md:mb-10 w-full h-auto min-h-[200px]">
+    <div key={window.innerWidth} className="flex -mb-10 md:mb-10 w-full h-auto min-h-[400px]">
       <canvas 
         ref={canvasRef} 
-        className="top-0 left-0 w-full h-auto rounded-2xl"
+        className="top-0 left-0 w-full h-full rounded-2xl"
         style={{ maxWidth: '100%' }}
       />
     </div>
