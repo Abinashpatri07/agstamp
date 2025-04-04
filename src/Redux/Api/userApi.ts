@@ -6,20 +6,20 @@ export const userApi = createApi({
   endpoints: (build) => ({
     userRegister: build.mutation<RegisterResponse,UserRegister>({
         query: (user) => ({
-        url: "/register",
+        url: "/api/v1/user/register",
         method: 'POST',
         body: user,
         }),
     }),
     UserLogin:build.mutation<RegisterResponse,UserLogin>({
       query: (user) => ({
-      url: "/login",
+      url: "/api/v1/user/login",
       method: 'POST',
       body: user,
       }),
     }),
     UserInfo:build.query<RegisterResponse,void>({
-      query: () => "/info"
+      query: () => "/api/v1/user/info"
     }),
   }),
 })

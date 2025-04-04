@@ -242,7 +242,7 @@ const Header: React.FC = () => {
   //logout handler
   const logoutHandler = async()=>{
     try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/logout`,{
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/logout`,{
         withCredentials : true
       })
       dispatch(setUser(res.data?.user));
