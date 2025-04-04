@@ -202,6 +202,12 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, ShoppingCart } from "lucide-react"; // Import cart icon
 import { useCart } from "../../Pages/CartContext";
 import { logo } from "../../assets/image";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/Store";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../Redux/Reducer/userSlice";
+import { toast } from "react-toastify";
 
  // Import useCart hook
 
@@ -210,7 +216,8 @@ const Header: React.FC = () => {
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
   const { cart } = useCart(); // Get cart data
-
+  const user = useSelector<RootState>(state=> state.userSlice.user) as User
+  const dispatch = useDispatch();
   // Calculate total cart items
   const cartCount = cart.reduce((total: any, item: { quantity: any; }) => total + item.quantity, 0);
 
@@ -231,6 +238,19 @@ const Header: React.FC = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
+
+  //logout handler
+  const logoutHandler = async()=>{
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/logout`,{
+        withCredentials : true
+      })
+      dispatch(setUser(res.data?.user));
+      toast.success(res.data?.message);
+    } catch (error:any) {
+      toast.error(error.data?.error);
+    }
+  }
 
   return (
     <header className="bg-white text-blue-800 fixed top-0 left-0 w-full z-50">
@@ -259,9 +279,11 @@ const Header: React.FC = () => {
 
         {/* Right Side - Login & Cart */}
         <div className="flex items-center space-x-4">
-          <button className="bg-blue-800 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-400">
+          {!user ? <Link to={"/login"} className="bg-blue-800 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-400">
             Login
-          </button>
+          </Link> : <button onClick={logoutHandler} className="bg-blue-800 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-400">
+            Logout
+          </button>}
 
           {/* Cart Icon with Badge */}
           <Link to="/cart" className="relative">
