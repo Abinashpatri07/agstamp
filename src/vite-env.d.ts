@@ -28,7 +28,6 @@ interface User {
     password: string;
     createdAt: string;  // ISO date string
     updatedAt: string;  // ISO date string
-    __v: number;
 }
 
 
@@ -36,4 +35,13 @@ interface UserState {
     success: boolean;
     user: User|undefined;
     loading: boolean;
+}
+
+
+interface StampForm {
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  images: File[];
 }

@@ -16,6 +16,7 @@ import Login from "./Pages/Login";
 import { useUserInfoQuery } from "./Redux/Api/userApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "./Redux/Reducer/userSlice";
+import AddStamp from "./Pages/AddStamp";
 
 
 
@@ -46,6 +47,9 @@ const App = () => {
           <Route path="/contact-us" element={<ContactUs/>} />
           <Route path="/paymentmethod" element={<PaymentMethod/>} />
           <Route path="/checkout" element={<CheckoutPage/>} />
+
+          {/* admin routes  */}
+          <Route path="/admin/addstamp" element={<AddStamp/>} />
         </Routes>
         <Footer />
         </div>

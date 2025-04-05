@@ -9,7 +9,6 @@ const SignUp = () => {
   const [userRegister, { isLoading, error }] = useUserRegisterMutation();
   const navigate = useNavigate();
   const user = useSelector<RootState>(state=> state.userSlice.user) as User
-  console.log(user)
   const [form, setForm] = useState({
     firstname: "",
     lastname: "",
